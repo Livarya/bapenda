@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import AdminLayout from '../components/AdminLayout';
 import SuperAdminLayout from '../components/SuperAdminLayout';
@@ -38,12 +38,22 @@ const AdminDashboard = () => {
       const res = await axios.get('/api/admin/recent-laporan', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setRecentLaporan(res.data);
+      setRecentLaporan(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error('Error fetching recent laporan:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const cardStyle = {
+    background: 'rgba(30, 41, 59, 0.5)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '12px',
+    padding: '24px',
+    textAlign: 'center',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
   };
 
   if (loading) {
@@ -56,58 +66,28 @@ const AdminDashboard = () => {
 
   return (
     <Layout title={user?.role === 'superadmin' ? 'Dashboard Super Admin' : 'Dashboard Admin'}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-        <div style={{
-          background: 'rgba(30, 41, 59, 0.5)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          padding: '24px',
-          textAlign: 'center',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-        }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        gap: '20px',
+        marginBottom: '40px'
+      }}>
+        <div style={cardStyle}>
           <div style={{ fontSize: '32px', marginBottom: '12px' }}>👥</div>
           <div style={{ color: '#fff', marginBottom: '10px' }}>Total Pengguna</div>
           <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#fff' }}>{stats.totalUsers}</div>
         </div>
-
-        <div style={{
-          background: 'rgba(30, 41, 59, 0.5)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          padding: '24px',
-          textAlign: 'center',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-        }}>
+        <div style={cardStyle}>
           <div style={{ fontSize: '32px', marginBottom: '12px' }}>📑</div>
           <div style={{ color: '#fff', marginBottom: '10px' }}>Total Laporan</div>
           <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#fff' }}>{stats.totalLaporan}</div>
         </div>
-
-        <div style={{
-          background: 'rgba(30, 41, 59, 0.5)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          padding: '24px',
-          textAlign: 'center',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-        }}>
+        <div style={cardStyle}>
           <div style={{ fontSize: '32px', marginBottom: '12px' }}>🔔</div>
           <div style={{ color: '#fff', marginBottom: '10px' }}>Laporan Baru</div>
           <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#fff' }}>{stats.laporanBaru}</div>
         </div>
-
-        <div style={{
-          background: 'rgba(30, 41, 59, 0.5)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          padding: '24px',
-          textAlign: 'center',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-        }}>
+        <div style={cardStyle}>
           <div style={{ fontSize: '32px', marginBottom: '12px' }}>⚡</div>
           <div style={{ color: '#fff', marginBottom: '10px' }}>Sedang Diproses</div>
           <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#fff' }}>{stats.laporanDiproses}</div>
@@ -115,44 +95,41 @@ const AdminDashboard = () => {
       </div>
 
       <div style={{ marginTop: '40px' }}>
-        <div style={{ 
-          color: '#fff', 
-          marginBottom: '20px', 
-          fontSize: '18px', 
+        <div style={{
+          color: '#fff',
+          marginBottom: '20px',
+          fontSize: '18px',
           fontWeight: '600',
           borderBottom: '1px solid rgba(255,255,255,0.1)',
           paddingBottom: '12px'
         }}>
           Laporan Terbaru
         </div>
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {recentLaporan.map(l => (
+          {recentLaporan.length > 0 ? recentLaporan.map(l => (
             <div key={l._id} style={{
-              background: 'rgba(30, 41, 59, 0.5)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
+              ...cardStyle,
               padding: '20px',
               display: 'flex',
               alignItems: 'center',
               gap: '18px',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-              cursor: 'pointer',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.3)'
-              }
+              cursor: 'pointer'
             }}>
               <div style={{ flex: 1, color: '#fff' }}>
-                <div style={{ fontWeight: '600', fontSize: '16px' }}>{l.nama_merk} 
-                  <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginLeft: '8px' }}>({l.npwpd})</span>
+                <div style={{ fontWeight: '600', fontSize: '16px' }}>
+                  {l.nama_merk}
+                  <span style={{
+                    color: 'rgba(255,255,255,0.7)',
+                    fontSize: '14px',
+                    marginLeft: '8px'
+                  }}>({l.npwpd})</span>
                 </div>
-                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: '4px 0' }}>{l.alamat}</div>
+                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>{l.alamat}</div>
                 <div style={{ fontSize: '13px' }}>
                   <span style={{
-                    color: l.status === 'Disetujui' ? '#4ade80' : 
-                           l.status === 'Ditolak' ? '#f87171' : '#fbbf24',
+                    color: l.status === 'Disetujui' ? '#4ade80' :
+                          l.status === 'Ditolak' ? '#f87171' : '#fbbf24',
                     fontWeight: 600,
                     marginRight: '12px'
                   }}>{l.status}</span>
@@ -161,7 +138,8 @@ const AdminDashboard = () => {
                   </span>
                 </div>
               </div>
-              {Array.isArray(l.foto) && typeof l.foto[0] === 'string' && l.foto.length > 0 && (
+
+              {Array.isArray(l.foto) && l.foto.length > 0 && (
                 <div style={{
                   minWidth: '80px',
                   height: '80px',
@@ -170,27 +148,24 @@ const AdminDashboard = () => {
                   overflow: 'hidden',
                   border: '1px solid rgba(255,255,255,0.1)'
                 }}>
-                  <img 
-                    src={`http://localhost:5000/uploads/${l.foto[0]}`} 
-                    alt="foto" 
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}/uploads/${l.foto[0]}`}
+                    alt="foto"
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover'
-                    }} 
+                    }}
                   />
                 </div>
               )}
             </div>
-          ))}
-          {recentLaporan.length === 0 && (
-            <div style={{ 
-              color: 'rgba(255,255,255,0.7)', 
-              textAlign: 'center', 
+          )) : (
+            <div style={{
+              color: 'rgba(255,255,255,0.7)',
+              textAlign: 'center',
               padding: '32px',
-              background: 'rgba(30, 41, 59, 0.5)',
-              borderRadius: '12px',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
+              ...cardStyle
             }}>
               Belum ada laporan
             </div>

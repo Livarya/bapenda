@@ -15,7 +15,7 @@ const Dashboard = () => {
   const fetchLaporan = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/api/laporan/user', { 
+      const res = await axios.get('https://699f241ca119.ngrok-free.app/api/laporan/user', { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setLaporan(res.data);

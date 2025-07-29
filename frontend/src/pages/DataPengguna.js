@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import { FaEdit, FaTrash, FaPlus, FaSearch } from 'react-icons/fa';
 import AdminLayout from '../components/AdminLayout';
@@ -44,7 +44,7 @@ const DataPengguna = () => {
     setLoading(true);
     try {
       const res = await axios.get('/api/superadmin/users', { headers: { Authorization: `Bearer ${token}` } });
-      setUsers(res.data);
+      setUsers(Array.isArray(res.data) ? res.data : []);
     } catch {
       setUsers([]);
     }
@@ -109,14 +109,14 @@ const DataPengguna = () => {
     } catch {}
   };
 
-  const filtered = users.filter(u =>
+  const filtered = Array.isArray(users) ? users.filter(u =>
     (u.nama.toLowerCase().includes(search.toLowerCase()) ||
     u.username.toLowerCase().includes(search.toLowerCase()) ||
     u.email.toLowerCase().includes(search.toLowerCase()) ||
     (u.jabatan||'').toLowerCase().includes(search.toLowerCase())) &&
     (!roleFilter || u.role === roleFilter) &&
     (!statusFilter || u.status === statusFilter)
-  );
+  ) : [];
   const maxPage = Math.ceil(filtered.length/perPage);
   const paged = filtered.slice((page-1)*perPage, page*perPage);
 

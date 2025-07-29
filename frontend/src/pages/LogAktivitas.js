@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import { FaFileExcel, FaSearch } from 'react-icons/fa';
 import AdminLayout from '../components/AdminLayout';
@@ -53,7 +53,7 @@ const LogAktivitas = () => {
     setLoading(true);
     try {
       const res = await axios.get('/api/superadmin/logs', { headers: { Authorization: `Bearer ${token}` } });
-      setLog(res.data);
+      setLog(Array.isArray(res.data) ? res.data : []);
     } catch {
       setLog([]);
     }
@@ -64,7 +64,7 @@ const LogAktivitas = () => {
     return <div style={{padding:40, textAlign:'center'}}>Akses hanya untuk Super Admin</div>;
   }
 
-  let filtered = log.filter(l =>
+  let filtered = Array.isArray(log) ? log.filter(l =>
     (!aktivitasFilter || l.aktivitas === aktivitasFilter) &&
     (!tanggal || new Date(l.waktu).toISOString().slice(0,10) === tanggal) &&
     (
@@ -72,7 +72,7 @@ const LogAktivitas = () => {
       l.laporan?.nama_merk?.toLowerCase().includes(search.toLowerCase()) ||
       l.laporan?.npwpd?.toLowerCase().includes(search.toLowerCase())
     )
-  );
+  ) : [];
   const total = filtered.length;
   const perPage = 10;
   const maxPage = Math.ceil(total/perPage);

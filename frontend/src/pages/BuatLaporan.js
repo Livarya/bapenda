@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 
 // Titik pusat area geo-fencing (misal: Bandung)
 const GEO_CENTER = { lat: -6.911303, lng:  107.610311};
-const GEO_RADIUS_M = 5000; // 5 km
+const GEO_RADIUS_M = 50000; // 5 km
 
 function haversine(lat1, lon1, lat2, lon2) {
   function toRad(x) { return x * Math.PI / 180; }

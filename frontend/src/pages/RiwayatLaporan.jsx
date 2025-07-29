@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 
@@ -17,7 +17,7 @@ const RiwayatLaporan = () => {
       const res = await axios.get('/api/laporan/user', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setLaporan(res.data);
+      setLaporan(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error('Error fetching laporan:', err);
     } finally {
@@ -48,7 +48,7 @@ const RiwayatLaporan = () => {
             Belum ada laporan
           </div>
         ) : (
-          laporan.map(l => (
+          Array.isArray(laporan) && laporan.map(l => (
             <div key={l._id} style={{
               background: 'rgba(30, 41, 59, 0.5)',
               backdropFilter: 'blur(10px)',

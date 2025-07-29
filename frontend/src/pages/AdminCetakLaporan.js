@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import { FaPrint, FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

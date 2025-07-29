@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
@@ -26,13 +26,15 @@ const RegisterPage = () => {
     setLoading(true);
     setError(null);
     try {
-      await axios.post('/api/auth/register', form);
+      
+      await axios.post(`/api/auth/register`, form);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.msg || 'Registrasi gagal');
     }
     setLoading(false);
   };
+  
 
   return (
     <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'var(--light-blue)'}}>

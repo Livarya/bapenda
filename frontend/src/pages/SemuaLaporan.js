@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -48,7 +48,7 @@ const SemuaLaporan = () => {
     setLoading(true);
     try {
       const res = await axios.get('/api/laporan', { headers: { Authorization: `Bearer ${token}` } });
-      setLaporan(res.data);
+      setLaporan(Array.isArray(res.data) ? res.data : []);
     } catch {
       setLaporan([]);
     }
