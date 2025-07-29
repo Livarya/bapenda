@@ -83,9 +83,9 @@ const BuatLaporan = () => {
     data.append('alamat', formData.alamat);
     data.append('npwpd', formData.npwpd);
     data.append('hasil_pemeriksaan', formData.hasil_pemeriksaan);
-    for (let i = 0; i < formData.foto.length; i++) {
-      data.append('foto', formData.foto[i]);
-    }
+    formData.foto.forEach(file => {
+      data.append('foto', file); // jangan pakai 'foto[]', tapi 'foto'
+    });
     data.append('latitude', location.lat);
     data.append('longitude', location.lng);
 

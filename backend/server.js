@@ -13,7 +13,19 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+
+
+// Middleware CORS
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://dafe096712ae.ngrok-free.app' // frontend dari ngrok
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // kalau pakai cookie/token
+}));
+
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -28,10 +40,14 @@ app.use('/api/laporan', require('./routes/laporan'));
 app.use('/api/superadmin', superadminRoutes);
 app.use('/api/admin', require('./routes/admin'));
 
+// Listen on all network interfaces (bisa diakses dari HP)
 const PORT = 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+const HOST = '0.0.0.0'; // Penting agar bisa diakses dari HP atau lewat Ngrok
+app.listen(PORT, HOST, () => {
+  console.log(`✅ Server started at http://${HOST}:${PORT}`);
+});
 
-// Tambahkan error handler global
+// Global error handler
 app.use((err, req, res, next) => {
   console.error('GLOBAL ERROR HANDLER:', err.stack || err);
   res.status(500).json({ msg: 'Server error', error: err.message });

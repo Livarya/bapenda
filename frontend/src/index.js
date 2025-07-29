@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import axios from './utils/axios';
 
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'https://f8198a861c57.ngrok-free.app';
 
 axios.defaults.withCredentials = false;
 

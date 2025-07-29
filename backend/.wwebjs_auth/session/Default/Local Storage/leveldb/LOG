@@ -1,2 +1,6 @@
-2025/07/22-09:44:49.443 3458 Creating DB C:\BAP-PKL-2\geotagging\backend\.wwebjs_auth\session\Default\Local Storage\leveldb since it was missing.
-2025/07/22-09:44:49.454 3458 Reusing MANIFEST C:\BAP-PKL-2\geotagging\backend\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2025/07/29-14:54:26.061 47ac Reusing MANIFEST D:\testbap\BAP-laporan\backend\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2025/07/29-14:54:26.061 47ac Recovering log #19
+2025/07/29-14:54:26.061 47ac Reusing old log D:\testbap\BAP-laporan\backend\.wwebjs_auth\session\Default\Local Storage\leveldb/000019.log 
+2025/07/29-14:56:26.502 4af8 Level-0 table #23: started
+2025/07/29-14:56:26.563 4af8 Level-0 table #23: 13273 bytes OK
+2025/07/29-14:56:26.588 4af8 Delete type=0 #19

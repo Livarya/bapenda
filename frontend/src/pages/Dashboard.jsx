@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const fetchLaporan = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('https://699f241ca119.ngrok-free.app/api/laporan/user', { 
+      const res = await axios.get('/api/laporan/user', { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setLaporan(res.data);

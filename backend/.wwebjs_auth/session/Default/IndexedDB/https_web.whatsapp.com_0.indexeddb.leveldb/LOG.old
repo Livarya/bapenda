@@ -1,0 +1,14 @@
+2025/07/29-14:46:29.853 4d14 Reusing MANIFEST D:\testbap\BAP-laporan\backend\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/07/29-14:46:29.853 4d14 Recovering log #542
+2025/07/29-14:46:29.893 4d14 Reusing old log D:\testbap\BAP-laporan\backend\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000542.log 
+2025/07/29-14:46:29.893 4d14 Delete type=2 #532
+2025/07/29-14:46:29.893 4d14 Delete type=2 #533
+2025/07/29-14:46:29.894 4d14 Delete type=2 #534
+2025/07/29-14:46:29.894 4d14 Delete type=2 #535
+2025/07/29-14:46:29.894 4d14 Delete type=2 #536
+2025/07/29-14:46:29.894 4d14 Delete type=2 #537
+2025/07/29-14:46:29.894 4d14 Delete type=2 #538
+2025/07/29-14:46:29.894 4d14 Delete type=2 #539
+2025/07/29-14:46:29.894 4d14 Delete type=2 #540
+2025/07/29-14:46:29.894 4d14 Delete type=2 #543
+2025/07/29-14:46:34.213 3d0c Manual compaction at level-0 from '\x003\x00\x00\x00' @ 72057594037927935 : 1 .. '\x004\x00\x00\x00' @ 0 : 0; will stop at (end)

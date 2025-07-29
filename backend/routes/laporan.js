@@ -18,7 +18,7 @@ const {
   createLaporan,
   getUserLaporan,
   getAllLaporan,
-  getLaporanById,
+  getLaporanById, // <-- PASTIKAN BARIS INI ADA
   updateStatusLaporan,
   deleteLaporan,
   generateAndSendPdf
